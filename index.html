@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photoshoot Location Planner</title>
+    <style>
+        main {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin-bottom: 0px;
+        }
+        
+        #location-list {
+            width: 325px;
+            height: 800px;
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-y: auto;
+        }
+        
+        .location-list-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        #location-list ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        #location-list li {
+            padding: 10px;
+            margin: 5px 0;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        #location-list li:hover {
+            background-color: #e3f2fd;
+        }
+        
+        #map {
+            width: 100%;
+            height: 830px;
+            border-radius: 8px;
+        }
+        
+        .map-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        #location-photos {
+            width: 250px;
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        #location-photos img {
+            width: 100%;
+            border-radius: 4px;
+        }
+        
+        #filter-controls {
+            height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f5f5f5;
+            padding: 0 20px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        
+        #filter-controls .filter-label {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        #filter-controls .filter-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        #filter-controls button {
+            padding: 10px 20px;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        #filter-controls button:hover {
+            background: #e3f2fd;
+            border-color: #2196f3;
+        }
+        
+        #filter-controls button.active {
+            background: #2196f3;
+            color: white;
+            border-color: #2196f3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Photoshoot Location Finder</h1>
+    <Main>
+    <div id="location-list">
+        <div class="location-list-title">Locations</div>
+            <ul>
+                <li data-lat="34.21669" data-lng="-84.14775">Cumming City Center</li>
+                <li data-lat="34.20303" data-lng="-84.13931">Sawnee Mountain Preserve</li>
+                <li data-lat="34.19119" data-lng="-84.13014">Coal Mountain Park</li>
+                <li data-lat="34.17845" data-lng="-84.14523">Vickery Creek Trail</li>
+                <li data-lat="34.15923" data-lng="-84.13056">Lake Lanier Islands</li>
+                <li data-lat="34.0199" data-lng="-84.2326">Autrey Mill Nature Preserve & Heritage Center (Johns Creek)</li>
+                <li data-lat="34.0290" data-lng="-84.1986">Newtown Park (Johns Creek / Alpharetta)</li>
+                <li data-lat="34.0740" data-lng="-84.2894">Big Creek Greenway (Alpharetta / Roswell section)</li>
+                <li data-lat="34.0000" data-lng="-84.3760">Chattahoochee Nature Center (Roswell)</li>
+                <li data-lat="34.0730" data-lng="-84.2210">Rock Mill Park (Alpharetta)</li>
+                <li data-lat="34.1000" data-lng="-84.2030">North Park (Alpharetta)</li>
+                <li data-lat="34.0830" data-lng="-84.2120">Cogburn Road Park (Alpharetta)</li>
+                <li data-lat="34.1920" data-lng="-84.1980">Cauley Creek Park (Johns Creek)</li>
+                <li data-lat="34.0510" data-lng="-84.3104">Big Creek Greenway — Mansell Rd access (Alpharetta)</li>
+                <li data-lat="34.0410" data-lng="-84.3370">Big Creek Greenway — Webb Bridge Rd / YMCA area (Alpharetta)</li>
+                <li data-lat="34.0815" data-lng="-84.2600">Big Creek Park (Roswell, entry to Greenway)</li>
+                <li data-lat="34.0250" data-lng="-84.2300">Shakerag Park (Johns Creek)</li>
+                <li data-lat="34.1150" data-lng="-84.2950">Webb Bridge Park (Alpharetta)</li>
+                <li data-lat="34.0450" data-lng="-84.3350">Union Hill / Forsyth-side Big Creek Greenway access (north end)</li>
+                <li data-lat="33.7584" data-lng="-84.6360">Sweetwater Creek State Park (Lithia Springs / west-of-Atlanta) — still reachable for a day trip</li>
+                <li data-lat="34.0250" data-lng="-84.2450">Autrey Mill — Heritage buildings & historic farm structures (Johns Creek)</li>
+                <li data-lat="34.0000" data-lng="-84.2300">Chattahoochee River Greenway / nearby Chattahoochee-adjacent trails (near Roswell / Johns Creek)</li>
+                <li data-lat="34.1000" data-lng="-84.2500">Mixed residential-green belt areas along Big Creek / Vickery Creek (various access points in Alpharetta / Roswell)</li>
+            </ul>
+        </div>
+        <div class="map-container">
+            <div id="map"></div>
+            <!-- <div id="filter-controls">
+                <div class="filter-label">Filter by:</div>
+                <div class="filter-buttons">
+                    <button id="filter-parks" class="filter-btn active">Parks & Nature</button>
+                    <button id="filter-trails" class="filter-btn">Trails</button>
+                    <button id="filter-other" class="filter-btn">Other</button>
+                </div>
+            </div> -->
+        </div>
+    <script src="index.js"></script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDuNMBCae9ZQXbAp1WjPCNS9Cgubd1uE4&callback=initMap">
+    </script>
+    </Main>
+</body>
+</html>
