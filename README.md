@@ -8,7 +8,7 @@ This is a web-based photoshoot location planner that displays an interactive Goo
 
 The purpose of this software is to help photographers quickly identify and explore potential photoshoot locations in the North Georgia area, providing detailed descriptions of what makes each location unique for photography and allowing easy visual exploration through the interactive map interface.
 
-[Software Demo Video](http://youtube.link.goes.here)
+[Software Demo Video](https://youtu.be/lef_Ahu8um8)
 
 # Development Environment
 
